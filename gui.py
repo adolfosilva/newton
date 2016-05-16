@@ -8,16 +8,13 @@ from gi.repository import Gtk
 from numpy import sin, linspace
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_gtk3cairo import FigureCanvasGTK3Cairo as FigureCanvas
+from sympy import symbols, sympify
 
 from newton import Newton, AbsoluteError, RelativeError
 
 def _parse_error(err_str):
     """Parses a string representing an error type (Absoluto or Relativo)"""
     return AbsoluteError if err_str == 'Absoluto' else RelativeError
-
-def _parse_function(func_str):
-    """Parses a string representing a function"""
-    pass
 
 class Gui:
     def run(self): Gtk.main()
@@ -55,7 +52,7 @@ class Gui:
     def get_relevant_data(self):
         """Returns a dict with all the user input data"""
         from ast import literal_eval
-        data = { 'function': self.funcEntry.get_text(), # _parse_function(self.funcEntry.get_text())
+        data = { 'function': sympify(self.funcEntry.get_text()),
                  'interval': literal_eval(self.intervalEntry.get_text()),
                  'maxError': literal_eval(self.errorEntry.get_text()),
                  'maxIter': literal_eval(self.iterEntry.get_text()),

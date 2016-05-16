@@ -1,4 +1,4 @@
-# newton
+# newton [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 
 A Python implementation of the Newton-Raphson root finding method with a GUI for easier interaction.
 
@@ -15,8 +15,12 @@ You need to install the following dependencies:
 To execute the program, run:
 
 ```sh
-$ python2 gui.py
+$ ./gui.py
 ```
+
+## Credits
+
+Icon made by [Freepik](http://www.freepik.com/) from [flaticon.com](www.flaticon.com).
 
 ## License
 

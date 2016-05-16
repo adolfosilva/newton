@@ -25,6 +25,7 @@ class Gui:
         self.builder.add_from_file('newton.glade')
         self.table = Gtk.Table(2,2)
         self.main_window_init()
+        self.window.set_icon_from_file("axis.png")
         self.box_init()
         self.grid_init()
         self.func_entry_init()

@@ -2,11 +2,17 @@
 
 A Python implementation of the Newton-Raphson root finding method with a GUI for easier interaction.
 
-## Requirements
+## Dependencies
+
+You need to install the following dependencies:
+
+- GTK+3
+- Python 2 (2.6 or later)
+- gobject-introspection
 
 ## Running
 
-Just run:
+To execute the program, run:
 
 ```sh
 $ python2 gui.py

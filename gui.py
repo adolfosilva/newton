@@ -1,4 +1,4 @@
-#! /usr/bin/env python2
+#!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 
 import gi
@@ -19,8 +19,6 @@ def _parse_function(func_str):
     """Parses a string representing a function"""
     pass
 
-# handlers = { "onDeleteWindow": Gtk.main_quit }
-
 class Gui:
     def run(self): Gtk.main()
     def destroy(self, _): Gtk.main_quit()
@@ -29,7 +27,6 @@ class Gui:
         self.builder = Gtk.Builder()
         self.builder.add_from_file('newton.glade')
         self.table = Gtk.Table(2,2)
-        # self.builder.connect_signals(handlers)
         self.main_window_init()
         self.box_init()
         self.grid_init()
@@ -42,19 +39,18 @@ class Gui:
         self.button_init()
         self.window.show_all()
 
-    def calculate1(self, widget):
-        data = self.get_relevant_data()
-        # self.newton = Newton(data['function'], df, data['interval'], data['maxError'], data['maxIter'], data['errorType'])
-        self.draw_function_graph(widget, data)
-        msg = "Após %d iterações, obtemos um valor aproximado de 0.0015392" % (data['maxIter'])
-        ctx_id = self.statusbar.get_context_id('test')
-        self.statusbar_update(widget, ctx_id, msg)
-        #root = self.newton.run() # calculate root
-        #self.display_root(roo)
-    
-    def calculate2(self, widget):
+    def calculate(self, widget):
         self.box.pack_start(self.table, True, True, 0)
         data = self.get_relevant_data()
+        # self.newton = Newton(data['function'], df, data['interval'], data['maxError'], data['maxIter'], data['errorType'])
+        # stop_reason = self.newton.run()
+        # self.draw_table(widget, data)
+        # msg = "Após %d iterações, obtemos um valor aproximado de 0.0015392" % (data['maxIter'])
+        # ctx_id = self.statusbar.get_context_id('test')
+        # self.statusbar_update(widget, ctx_id, msg)
+
+    def draw_table(self, data):
+        pass
 
     def get_relevant_data(self):
         """Returns a dict with all the user input data"""
@@ -66,24 +62,6 @@ class Gui:
                  'errorType': _parse_error(self.errorDrop.get_active_text()) }
         print 'Debug:\n' + str(data) # debug
         return data
-
-    def draw_function_graph(self, widget, data):
-        fig = Figure()
-        ax = fig.add_subplot(111) # 211
-        n = 1000
-        x = linspace(-15,15,n,endpoint=True)
-        wave = ax.plot(x, 2*sin(x)/x,color='black', label='f(x)')
-        #ax.set_xlim(-15,15)
-        #ax.set_ylim(-1.2, 1.2)
-        ax.legend(loc='upper right')
-        ax = fig.gca()
-        ax.xaxis.set_ticks_position('bottom')
-        ax.yaxis.set_ticks_position('left')
-        ax.axhline(linewidth=1, color='black', linestyle='--')
-        ax.axvline(linewidth=1, color='black', linestyle='--')
-        #fig.tight_layout()
-        canvas = FigureCanvas(fig)
-        self.box.pack_start(canvas, True, True, 0)
 
     def main_window_init(self):
         self.window = self.builder.get_object('window1')
@@ -115,8 +93,7 @@ class Gui:
 
     def button_init(self):
         self.calcBtn = self.builder.get_object('calcularButton')
-        #self.calcBtn.connect('clicked', self.calculate1)
-        self.calcBtn.connect('clicked', self.calculate2)
+        self.calcBtn.connect('clicked', self.calculate)
         #self.calcBtn.connect('clicked', self.statusbar_update, ctx_id, msg)
 
     def statusbar_update(self, button, ctx_id, msg):

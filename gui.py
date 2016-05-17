@@ -24,6 +24,8 @@ class Gui:
         self.builder = Gtk.Builder()
         self.builder.add_from_file('newton.glade')
         self.table = Gtk.Table(2,2)
+        liststore = Gtk.ListStore(int,float,float,float,float,float)
+        self.tree = Gtk.TreeView(liststore)
         self.main_window_init()
         self.window.set_icon_from_file("axis.png")
         self.box_init()
@@ -56,7 +58,7 @@ class Gui:
         data = { 'function': sympify(self.funcEntry.get_text()),
                  'interval': literal_eval(self.intervalEntry.get_text()),
                  'maxError': literal_eval(self.errorEntry.get_text()),
-                 'maxIter': literal_eval(self.iterEntry.get_text()),
+                 'maxIter': literal_eval(self.iterSpinBtn.get_value()),
                  'errorType': _parse_error(self.errorDrop.get_active_text()) }
         print 'Debug:\n' + str(data) # debug
         return data
@@ -81,7 +83,7 @@ class Gui:
         self.intervalEntry = self.builder.get_object('intervaloEntry')
 
     def iter_entry_init(self):
-        self.iterEntry = self.builder.get_object('iterEntry')
+        self.iterSpinBtn = self.builder.get_object('iterSpinButton')
 
     def error_entry_init(self):
         self.errorEntry = self.builder.get_object('errorEntry')
@@ -97,6 +99,16 @@ class Gui:
     def statusbar_update(self, button, ctx_id, msg):
         # print self.funcEntry.get_text()
         self.statusbar.push(ctx_id, msg)
+
+    def about_window(self, widget):
+        about = Gtk.AboutDialog()
+        about.set_program_name('newton')
+        about.set_version('0.1')
+        #about.set_copyright('(c) Adolfo Silva')
+        about.set_comments('A Python implementation of the Newton-Raphson root finding iterative method.')
+        about.set_website('https://github.com/adolfosilva/newton')
+        about.run()
+        about.destroy()
 
 if __name__ == '__main__':
     Gui().run()

@@ -33,7 +33,7 @@ class NoConvergence(MethodException):
 
 class Newton:
     """Método de Newton"""
-    def __init__(self, f, intervalo, erro_max, iter_max, err_type, casas_decimais=5):
+    def __init__(self, f, intervalo, erro_max, iter_max, err_type, casas_decimais):
         self.f = f # função
         self.intervalo = intervalo # intervalo
         self.df = f.diff() # primeira derivada

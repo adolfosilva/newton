@@ -6,7 +6,7 @@ import unittest
 import newton
 
 class TestErrors(unittest.TestCase):
-    f1 = sympy.sympify("x**4 + x - 1")
+    f1 = "x**4 + x - 1"
 
     def test_initial_guess(self):
         n = newton.Newton(f=self.f1, intervalo=(0.0, 1.0), erro_max=0.0005, iter_max=3, err_type=newton.RelativeError, casas_decimais=4)

@@ -35,6 +35,7 @@ class Gui:
         self.iter_entry_init()
         self.error_entry_init()
         self.error_drop_init()
+        self.casas_decimais_init()
         self.statusbar_init()
         self.button_init()
         self.window.show_all()
@@ -58,7 +59,8 @@ class Gui:
         data = { 'function': sympify(self.funcEntry.get_text()),
                  'interval': literal_eval(self.intervalEntry.get_text()),
                  'maxError': literal_eval(self.errorEntry.get_text()),
-                 'maxIter': literal_eval(self.iterSpinBtn.get_value()),
+                 'maxIter': int(self.iterSpinBtn.get_value_as_int()),
+                 'casasDecimais': int(self.casasDecimaisSpinBtn.get_value_as_int()),
                  'errorType': _parse_error(self.errorDrop.get_active_text()) }
         print 'Debug:\n' + str(data) # debug
         return data
@@ -90,6 +92,9 @@ class Gui:
 
     def error_drop_init(self):
         self.errorDrop = self.builder.get_object('errorDrop')
+
+    def casas_decimais_init(self):
+        self.casasDecimaisSpinBtn = self.builder.get_object('casasDecimaisSpinButton')
 
     def button_init(self):
         self.calcBtn = self.builder.get_object('calcularButton')

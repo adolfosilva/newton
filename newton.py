@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 
-"""Implementação do método iterative de Newton-Raphson."""
+"""Implementação do método iterativo de Newton-Raphson."""
 
 import random
 import sympy
@@ -69,7 +69,6 @@ class Newton(object):
 
     def __iter__(self): return self
 
-    # TODO: implement
     def converges(self):
         """Verifica se a função converge."""
         return True
@@ -121,7 +120,6 @@ class Newton(object):
             self.iter_atual += 1
             return resultados
 
-    # TODO: test
     def iters(self, n):
         """Retorna as primeiras n linhas de resultados."""
         return [self.next() for _ in range(n)]

@@ -9,30 +9,6 @@ from sympy import sympify
 # Erro absoluto e relativo
 AbsoluteError, RelativeError = range(1, 3)
 
-class MethodException(Exception):
-    """Exceção genérica base para todos as exceções do método"""
-    def __init__(self, msg): self.msg = msg
-
-class MaxIterReached(StopIteration):
-    """Iteração máxima atingida"""
-    def __init__(self, iter_max):
-        print 'Iteração máxima atingida após {} iterações.'.format(iter_max)
-
-class MaxErrorReached(StopIteration):
-    """Error máximo atingido"""
-    def __init__(self, error_max):
-        print 'Erro máximo {} atingido.'.format(error_max)
-
-class FoundSolution(StopIteration):
-    """Solução encontrada"""
-    def __init__(self, x):
-        print 'Solução encontrada: %f'.format(x)
-
-class NoConvergence(MethodException):
-    """Função não convergente"""
-    def __init__(self):
-        super(MethodException, self).__init__("Função não converge usando o método de Newton.")
-
 class Newton(object):
     """Método de Newton"""
     def __iter__(self): return self
@@ -50,7 +26,7 @@ class Newton(object):
         self.iter_atual = 0 # iteração actual
         # verificar condições de convergência
         if not self.converges(): # se não passar os testes de convergência
-            raise NoConvergence() # levanta uma excepção
+            raise Exception('Função não converge usando o método de Newton.') # levanta uma excepção
 
     def __str__(self):
         return '''
@@ -107,15 +83,15 @@ class Newton(object):
             self.iter_atual += 1
             return resultados
         else:
-            if self.iter_atual == self.iter_max: raise MaxIterReached(self.iter_max)
+            if self.iter_atual == self.iter_max: raise Exception('Iteração máxima atingida após {} iterações.'.format(self.iter_max))
             x_prev = self.xk
             fxk = round(self.f(self.xk), self.casas_decimais)
             dfxk = round(self.df(self.xk), self.casas_decimais)
             xk = round(self.xk - (fxk / dfxk), self.casas_decimais)
             erro = round(self.error(x_prev, xk), self.casas_decimais)
             resultados = (self.iter_atual, x_prev, fxk, dfxk, xk, erro)
-            if xk == 0.0: raise FoundSolution(xk)
-            if erro <= self.erro_max: raise MaxErrorReached(self.erro_max)
+            if xk == 0.0: raise Exception('Solução encontrada: %f'.format(xk))
+            if erro <= self.erro_max: raise Exception('Erro máximo {} atingido.'.format(self.erro_max))
             self.xk = xk
             self.iter_atual += 1
             return resultados
@@ -131,5 +107,5 @@ if __name__ == '__main__':
         print 'k\txk\tf(xk)\tdf(xk)\txk+1\terro'
         for k in n:
             print k
-    except MethodException as e:
+    except Exception as e:
         print e
